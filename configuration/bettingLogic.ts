@@ -14,12 +14,16 @@ export async function getTeamStats(team: string) {
     });
 
     const games = response.data.response;
-    return games.slice(0, 5).map(game => ({
-        opponent: game.teams.away.name,
-        score: game.scores,
-        date: game.date
-    }));
-}
+
+return games.slice(0, 5).map((game: { 
+    teams: { away: { name: string } }, 
+    scores: any, 
+    date: string 
+}) => ({
+    opponent: game.teams.away.name,
+    score: game.scores,
+    date: game.date
+}));
 
 // Fetch betting odds for a team
 export async function getBettingOdds(team: string) {
