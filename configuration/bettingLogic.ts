@@ -31,8 +31,10 @@ export async function getBettingOdds(team: string) {
         params: { apiKey: ODDS_API_KEY, regions: "us", markets: "h2h,spreads" }
     });
 
-    return response.data.filter(game => game.home_team === team || game.away_team === team);
-}
+    const filteredGames = response.data.filter((game: { 
+    home_team: string; 
+    away_team: string 
+}) => game.home_team === team || game.away_team === team);
 
 // Generate betting insights
 export async function getBettingInsights(team: string) {
