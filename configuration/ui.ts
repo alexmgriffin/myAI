@@ -1,4 +1,4 @@
-import { AI_NAME, OWNER_NAME } from "@/configuration/identity";
+import { Gameday_Guru, Alex_Griffin } from "@/configuration/identity";
 
 export const CHAT_HEADER: string = `[CHAT HEADER]`;
 export const MESSAGE_PLACEHOLDER: string = `[MESSAGE PLACEHOLDER]`;
