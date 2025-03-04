@@ -42,9 +42,14 @@ export async function getBettingInsights(team: string) {
     const odds = await getBettingOdds(team);
 
     let analysis = `Recent performance for ${team}:\n`;
-    teamStats.forEach(game => {
-        analysis += `- Vs ${game.opponent} on ${game.date}: Score ${game.score}\n`;
-    });
+
+teamStats.forEach((game: { 
+    opponent: string; 
+    date: string; 
+    score: string 
+}) => {
+    analysis += `- Vs ${game.opponent} on ${game.date}: Score ${game.score}\n`;
+});
 
     analysis += `\nCurrent betting odds:\n`;
     odds.forEach(game => {
