@@ -67,3 +67,7 @@ export async function getBettingInsights(team: string) {
 
     return analysis;
 }
+
+
+    return analysis;
+}
