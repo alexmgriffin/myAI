@@ -1,4 +1,5 @@
 import { OWNER_NAME, AI_NAME } from "./identity";
+import { BOT_AVATAR } from "./ui";
 
 export const INITIAL_MESSAGE: string = `Hello, I'm ${AI_NAME}, your personal meal and recipe assistant. 
   Tell me what ingredients you have, your dietary preferences, or your nutrition goals, 
