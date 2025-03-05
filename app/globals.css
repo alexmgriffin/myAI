@@ -4,7 +4,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(to bottom, #E27D60, #41B3A3 25%, #41B3A3 75%, #E27D60);
+  background: linear-gradient(to bottom, #000000, #41B3A3 25%, #41B3A3 75%, #000000);
   color: #DEF2F1;
   min-height: 100vh;
   display: flex;
@@ -108,7 +108,7 @@ body {
 /* Header and Footer */
 .header,
 .footer {
-  background: #3Aafa9;
+  background: #000000;
   color: #DEF2F1;
   padding: 10px;
   text-align: center;
