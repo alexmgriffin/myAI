@@ -1,46 +1,42 @@
-import Pinecone from "@pinecone-database/pinecone";
+import { Pinecone } from "@pinecone-database/pinecone";
 
-const PINECONE_INDEX = "nba-betting-odds";
+// Hardcoded Pinecone Credentials (Replace with your actual values)
+const PINECONE_API_KEY = "pcsk_fkUEu_UkJhwrMid7t5kG36CGXg9zMwyeRDiGKNMw8PwMEJSgmPtuSw43NbTCMTF7eGct9";
+const PINECONE_ENV = "us-east-1"; // Example: "us-east1-gcp"
+const PINECONE_INDEX = "my-ai";
 
-// Initialize Pinecone
 const pinecone = new Pinecone({
-    apiKey: process.env.PINECONE_API_KEY,
-    environment: process.env.PINECONE_ENV,
+    apiKey: PINECONE_API_KEY,
+    environment: PINECONE_ENV,
 });
 
-async function fetchDataFromPinecone(team: string) {
-    const index = pinecone.index(PINECONE_INDEX);
-
-    const queryResponse = await index.query({
-        topK: 1,
-        includeMetadata: true,
-        vector: [Math.random()], // Replace with an actual vector if needed
-        filter: { home: team },
-    });
-
-    if (!queryResponse.matches.length) {
-        throw new Error(`No betting data found for ${team}`);
-    }
-
-    return queryResponse.matches[0].metadata;
-}
-
+// Function to fetch data from Pinecone
 export async function getBettingInsights(team: string) {
     try {
-        const data = await fetchDataFromPinecone(team);
+        const index = pinecone.index(PINECONE_INDEX);
+        const query = await index.query({
+            topK: 1, // Get the most relevant betting data
+            includeValues: true,
+            vector: [team.toLowerCase().charCodeAt(0)], // Simple vectorization example
+        });
 
+        if (!query.matches || query.matches.length === 0) {
+            return `❌ No betting data available for ${team}.`;
+        }
+
+        const data = query.matches[0].metadata;
+        
+        // Construct response based on retrieved data
         let insights = `📊 **Betting Insights for ${team}** 📊\n`;
-        insights += `**Spread:** ${data.spread}\n`;
-        insights += `**Moneyline:** ${data.moneyline}\n`;
-        insights += `**Offensive Rating:** ${data.offensiveRating}\n`;
-        insights += `**Defensive Rating:** ${data.defensiveRating}\n`;
-        insights += `**Pace:** ${data.pace}\n`;
-        insights += `**Injuries:** ${data.injuries}\n`;
-        insights += `**Public Betting Consensus:** ${data.bettingTrend}\n`;
+        insights += `**Matchup:** ${data.away_team} vs ${data.home_team}\n`;
+        insights += `**Latest Odds:** ${data.odds}\n`;
+        insights += `**Injury Report:** ${data.injuries}\n`;
+        insights += `**Recent Form:** ${data.trends}\n`;
+        insights += `**Key Player Stats:** ${data.player_stats}\n`;
 
         return insights;
     } catch (error) {
         console.error("Error fetching betting insights:", error);
-        return `⚠️ Sorry, I couldn't fetch betting insights for ${team} at the moment.`;
+        return "⚠️ Sorry, I couldn't fetch betting insights at the moment.";
     }
 }
