@@ -6,5 +6,4 @@ export const WORD_CUTOFF: number = 8000;
 export const WORD_BREAK_MESSAGE: string = `I'm reaching my response limit. Let's continue in a new message.`;
 export const HISTORY_CONTEXT_LENGTH: number = 7;
 
-    return "I'm here to help! Ask me about sports betting insights or odds.";
-}
+return "I'm here to help! Ask me about sports betting insights or odds.";
