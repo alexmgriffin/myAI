@@ -8,37 +8,52 @@ const ODDS_API_KEY = "7a1e47dab792fbb1b4249717ec6e55a2";
 
 // Fetch recent game stats for a team
 export async function getTeamStats(team: string) {
-    const response = await axios.get(NBA_API_URL, {
-        headers: { "X-RapidAPI-Key": NBA_API_KEY },
-        params: { season: "2024", team }
-    });
+    try {
+        const response = await axios.get(NBA_API_URL, {
+            headers: { "X-RapidAPI-Key": NBA_API_KEY },
+            params: { season: "2024", team }
+        });
 
-    const games = response.data.response || [];
-
-    return games.slice(0, 5).map((game: { teams: { away: { name: string } }, scores: any, date: string }) => ({
-        opponent: game.teams.away.name,
-        score: game.scores,
-        date: game.date
-    }));
+        const games = response.data.response || [];
+        return games.slice(0, 5).map((game: { teams: { away: { name: string } }, scores: any, date: string }) => ({
+            opponent: game.teams.away.name,
+            score: game.scores,
+            date: game.date
+        }));
+    } catch (error) {
+        console.error("Error fetching team stats:", error);
+        return [];
+    }
 }
 
 // Fetch betting odds for a team
 export async function getBettingOdds(team: string) {
-    const response = await axios.get(ODDS_API_URL, {
-        params: { apiKey: ODDS_API_KEY, regions: "us", markets: "h2h,spreads" }
-    });
+    try {
+        const response = await axios.get(ODDS_API_URL, {
+            params: { apiKey: ODDS_API_KEY, regions: "us", markets: "h2h,spreads" }
+        });
 
-    const filteredGames = response.data.filter((game: { home_team: string; away_team: string }) =>
-        game.home_team === team || game.away_team === team
-    );
+        const filteredGames = response.data.filter((game: { home_team: string; away_team: string }) =>
+            game.home_team === team || game.away_team === team
+        );
 
-    return filteredGames;
+        return filteredGames;
+    } catch (error) {
+        console.error("Error fetching betting odds:", error);
+        return [];
+    }
 }
 
 // Generate betting insights
 export async function getBettingInsights(team: string) {
+    console.log(`Getting insights for team: ${team}`);
+
     const teamStats = await getTeamStats(team);
     const odds = await getBettingOdds(team);
+
+    if (!teamStats.length && !odds.length) {
+        return `No betting data found for ${team}.`;
+    }
 
     let analysis = `Recent performance for ${team}:\n`;
 
@@ -48,7 +63,7 @@ export async function getBettingInsights(team: string) {
 
     analysis += `\nCurrent betting odds:\n`;
 
-    if (!Array.isArray(odds)) {
+    if (!Array.isArray(odds) || odds.length === 0) {
         analysis += "No betting data available.\n";
     } else {
         odds.forEach((game: { home_team: string; away_team: string; bookmakers?: any[] }) => {
