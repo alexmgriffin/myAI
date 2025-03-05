@@ -1,5 +1,4 @@
 import { OWNER_NAME, AI_NAME } from "./identity";
-import { getBettingInsights } from "../configuration/bettingLogic"; // Make sure this path is correct
 
 export const INITIAL_MESSAGE: string = `Hello, I'm ${AI_NAME}, ${OWNER_NAME}'s AI assistant.`;
 export const DEFAULT_RESPONSE_MESSAGE: string = `Sorry, I'm having trouble generating a response. Please try again later.`;
@@ -10,23 +9,6 @@ export const HISTORY_CONTEXT_LENGTH: number = 7;
 export async function handleUserMessage(userInput: string): Promise<string> {
     const lowerInput = userInput.toLowerCase();
 
-    if (lowerInput.includes("betting") || lowerInput.includes("odds") || lowerInput.includes("stats")) {
-        const words = lowerInput.split(" ");
-        const teamName = words[words.length - 1]; // Extract last word as team name
-
-        if (!teamName || teamName.length < 3) {
-            return "Please specify a valid team name to get betting insights.";
-        }
-
-        try {
-            console.log(`Fetching betting insights for: ${teamName}`);
-            const insights = await getBettingInsights(teamName);
-            return insights;
-        } catch (error) {
-            console.error("Error fetching betting insights:", error);
-            return "Sorry, I couldn't fetch betting insights at the moment.";
-        }
-    }
 
     return "I'm here to help! Ask me about sports betting insights or odds.";
 }
