@@ -4,11 +4,8 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(to bottom, #000000, #41B3A3 25%, #41B3A3 75%, #000000);
-  color: #DEF2F1;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  background-color: #ffffff; /* White background */
+  color: #000000; /* Black text */
 }
 
 @layer utilities {
@@ -19,47 +16,47 @@ body {
 
 @layer base {
   :root {
-    --background: #41B3A3;
-    --foreground: #DEF2F1;
-    --card: #E8A87C;
-    --card-foreground: #17252A;
-    --popover: #41B3A3;
-    --popover-foreground: #DEF2F1;
-    --primary: #E27D60;
-    --primary-foreground: #DEF2F1;
-    --secondary: #E8A87C;
-    --secondary-foreground: #17252A;
-    --muted: #C38D9E;
-    --muted-foreground: #DEF2F1;
-    --accent: #E8A87C;
-    --accent-foreground: #17252A;
-    --destructive: #FF3B30;
-    --destructive-foreground: #DEF2F1;
-    --border: #3Aafa9;
-    --input: #3Aafa9;
-    --ring: #E27D60;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
   }
 
   .dark {
-    --background: #17252A;
-    --foreground: #DEF2F1;
-    --card: #2B7A78;
-    --card-foreground: #DEF2F1;
-    --popover: #17252A;
-    --popover-foreground: #DEF2F1;
-    --primary: #E8A87C;
-    --primary-foreground: #17252A;
-    --secondary: #C38D9E;
-    --secondary-foreground: #DEF2F1;
-    --muted: #2B7A78;
-    --muted-foreground: #DEF2F1;
-    --accent: #3Aafa9;
-    --accent-foreground: #17252A;
-    --destructive: #FF3B30;
-    --destructive-foreground: #DEF2F1;
-    --border: #2B7A78;
-    --input: #2B7A78;
-    --ring: #E27D60;
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
   }
 }
 
@@ -70,53 +67,4 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* Fix layout issues */
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  padding: 10px;
-}
-
-.chat-messages {
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-/* Chat Bubble Styling */
-.chat-bubble {
-  background-color: #E8A87C;
-  color: #17252A;
-  border-radius: 10px;
-  padding: 10px 15px;
-  max-width: 70%;
-}
-
-/* Chat Input Field */
-.chat-input {
-  background-color: #C38D9E;
-  color: #17252A;
-  border-radius: 20px;
-  padding: 10px;
-  border: none;
-  outline: none;
-}
-
-/* Header and Footer */
-.header,
-.footer {
-  background: #000000;
-  color: #DEF2F1;
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
-/* Adjust the chatbot icon */
-.chatbot-icon {
-  border-radius: 50%;
-  border: 2px solid #E27D60;
 }
