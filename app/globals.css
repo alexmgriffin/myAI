@@ -4,105 +4,67 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #f8f9fa; /* Light neutral background */
+  background: linear-gradient(to bottom, #FF9A3C, #FF9A3C 10%, #2B7A78 10%, #2B7A78 90%, #FF9A3C 90%);
+  color: white; /* Ensure text is readable on teal */
 }
 
-/* Utility Styles */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
 
-/* Color Theme Customization */
 @layer base {
   :root {
-    --background: #f8f9fa; /* Light grayish background */
-    --foreground: #2c3e50; /* Dark gray for text */
-    --card: #ffffff;
-    --card-foreground: #2c3e50;
-    --popover: #ffffff;
-    --popover-foreground: #2c3e50;
-    --primary: #168aad; /* Teal for primary elements */
-    --primary-foreground: #ffffff;
-    --secondary: #fdf6ec; /* Soft beige background for chat bubbles */
-    --secondary-foreground: #2c3e50;
-    --muted: #e0e0e0;
-    --muted-foreground: #7f8c8d;
-    --accent: #ff9f1c; /* Warm orange for contrast */
-    --accent-foreground: #2c3e50;
-    --destructive: #e63946;
-    --destructive-foreground: #ffffff;
-    --border: #d6d6d6;
-    --input: #d6d6d6;
-    --ring: #168aad;
-    --radius: 0.75rem; /* Softer rounded corners */
+    --background: #2B7A78;
+    --foreground: white;
+    --card: #3Aafa9;
+    --card-foreground: white;
+    --popover: #2B7A78;
+    --popover-foreground: white;
+    --primary: white;
+    --primary-foreground: #2B7A78;
+    --secondary: #3Aafa9;
+    --secondary-foreground: white;
+    --muted: #3Aafa9;
+    --muted-foreground: #DEF2F1;
+    --accent: #3Aafa9;
+    --accent-foreground: white;
+    --destructive: #FF3B30;
+    --destructive-foreground: white;
+    --border: #3Aafa9;
+    --input: #3Aafa9;
+    --ring: #FF9A3C;
   }
 
-  /* Dark Mode */
   .dark {
-    --background: #2c3e50;
-    --foreground: #ecf0f1;
-    --card: #34495e;
-    --card-foreground: #ffffff;
-    --popover: #34495e;
-    --popover-foreground: #ffffff;
-    --primary: #168aad;
-    --primary-foreground: #ffffff;
-    --secondary: #1f3a40;
-    --secondary-foreground: #ecf0f1;
-    --muted: #7f8c8d;
-    --muted-foreground: #bdc3c7;
-    --accent: #ff9f1c;
-    --accent-foreground: #2c3e50;
-    --destructive: #e63946;
-    --destructive-foreground: #ffffff;
-    --border: #3b4b5a;
-    --input: #3b4b5a;
-    --ring: #168aad;
+    --background: #17252A;
+    --foreground: #DEF2F1;
+    --card: #2B7A78;
+    --card-foreground: #DEF2F1;
+    --popover: #17252A;
+    --popover-foreground: #DEF2F1;
+    --primary: #DEF2F1;
+    --primary-foreground: #17252A;
+    --secondary: #2B7A78;
+    --secondary-foreground: #DEF2F1;
+    --muted: #2B7A78;
+    --muted-foreground: #DEF2F1;
+    --accent: #3Aafa9;
+    --accent-foreground: #17252A;
+    --destructive: #FF3B30;
+    --destructive-foreground: white;
+    --border: #2B7A78;
+    --input: #2B7A78;
+    --ring: #FF9A3C;
   }
 }
 
-/* Apply the theme */
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
-  }
-  .chat-bubble {
-    background-color: var(--secondary);
-    color: var(--secondary-foreground);
-    padding: 12px 16px;
-    border-radius: var(--radius);
-    max-width: 75%;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  .chat-bubble.user {
-    background-color: var(--primary);
-    color: var(--primary-foreground);
-    text-align: right;
-  }
-  .chat-bubble.bot {
-    background-color: var(--secondary);
-    color: var(--secondary-foreground);
-    text-align: left;
-  }
-  .chat-input {
-    border-radius: var(--radius);
-    padding: 10px 15px;
-    border: 1px solid var(--border);
-    background-color: var(--card);
-    color: var(--foreground);
-    width: 100%;
-  }
-  .chat-input:focus {
-    outline: 2px solid var(--ring);
-  }
-  .chat-header {
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: var(--primary);
   }
 }
