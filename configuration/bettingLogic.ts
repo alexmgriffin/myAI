@@ -42,32 +42,45 @@ export async function getBettingOdds(team: string) {
 
 // Generate betting insights
 export async function getBettingInsights(team: string) {
-    const teamStats = await getTeamStats(team);
-    const odds = await getBettingOdds(team);
+    console.log(`Fetching insights for team: ${team}`);
 
-    let analysis = `Recent performance for ${team}:\n`;
+    try {
+        const teamStats = await getTeamStats(team);
+        console.log("Team Stats Response:", teamStats);
 
-    teamStats.forEach((game: { opponent: string; date: string; score: string }) => {
-        analysis += `- Vs ${game.opponent} on ${game.date}: Score ${game.score}\n`;
-    });
+        const odds = await getBettingOdds(team);
+        console.log("Betting Odds Response:", odds);
 
-    analysis += `\nCurrent betting odds:\n`;
+        let analysis = `Recent performance for ${team}:\n`;
 
-    if (!Array.isArray(odds)) {
-        analysis += "No betting data available.\n";
-    } else {
-        odds.forEach((game: { home_team: string; away_team: string; bookmakers?: any[] }) => {
-            if (game.bookmakers && game.bookmakers.length > 0) {
-                analysis += `- ${game.home_team} vs ${game.away_team}: Spread ${game.bookmakers[0].markets[0].outcomes[0].point}\n`;
-            } else {
-                analysis += `- ${game.home_team} vs ${game.away_team}: No available odds.\n`;
-            }
-        });
+        if (Array.isArray(teamStats) && teamStats.length > 0) {
+            teamStats.forEach((game: { opponent: string; date: string; score: string }) => {
+                analysis += `- Vs ${game.opponent} on ${game.date}: Score ${game.score}\n`;
+            });
+        } else {
+            analysis += "- No recent games found.\n";
+        }
+
+        analysis += `\nCurrent betting odds:\n`;
+
+        if (!Array.isArray(odds) || odds.length === 0) {
+            analysis += "No betting data available.\n";
+        } else {
+            odds.forEach((game: { home_team: string; away_team: string; bookmakers?: any[] }) => {
+                if (game.bookmakers && game.bookmakers.length > 0) {
+                    analysis += `- ${game.home_team} vs ${game.away_team}: Spread ${game.bookmakers[0]?.markets?.[0]?.outcomes?.[0]?.point || "N/A"}\n`;
+                } else {
+                    analysis += `- ${game.home_team} vs ${game.away_team}: No available odds.\n`;
+                }
+            });
+        }
+
+        console.log("Final Analysis:", analysis);
+        return analysis;
+
+    } catch (error) {
+        console.error("Error fetching betting insights:", error);
+        return `Error fetching betting insights for ${team}. Please try again later.`;
     }
-
-    return analysis;
 }
 
-
-    return analysis;
-}
