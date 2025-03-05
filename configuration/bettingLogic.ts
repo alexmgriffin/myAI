@@ -1,36 +1,32 @@
-import { PineconeClient } from "@pinecone-database/pinecone";
+import Pinecone from "@pinecone-database/pinecone";
 
 const PINECONE_INDEX = "nba-betting-odds";
 
-// 📌 Function to retrieve stored NBA data from Pinecone
+// Initialize Pinecone
+const pinecone = new Pinecone({
+    apiKey: process.env.PINECONE_API_KEY,
+    environment: process.env.PINECONE_ENV,
+});
+
 async function fetchDataFromPinecone(team: string) {
-    const client = new PineconeClient();
-    await client.init({
-        apiKey: process.env.PINECONE_API_KEY,
-        environment: process.env.PINECONE_ENV,
-    });
+    const index = pinecone.index(PINECONE_INDEX);
 
-    const index = client.Index(PINECONE_INDEX);
-
-    // Query Pinecone for the given team
     const queryResponse = await index.query({
-        topK: 1,  // Get the most relevant result
+        topK: 1,
         includeMetadata: true,
-        vector: [Math.random()], // Dummy vector (adjust if needed)
-        filter: { home: team }, // Match the home team
+        vector: [Math.random()], // Replace with an actual vector if needed
+        filter: { home: team },
     });
 
-    if (queryResponse.matches.length === 0) {
+    if (!queryResponse.matches.length) {
         throw new Error(`No betting data found for ${team}`);
     }
 
     return queryResponse.matches[0].metadata;
 }
 
-// 📊 Generate insights based on retrieved data
 export async function getBettingInsights(team: string) {
     try {
-        // Fetch data from Pinecone
         const data = await fetchDataFromPinecone(team);
 
         let insights = `📊 **Betting Insights for ${team}** 📊\n`;
