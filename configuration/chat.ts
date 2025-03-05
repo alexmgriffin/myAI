@@ -1,5 +1,5 @@
 import { OWNER_NAME, AI_NAME } from "./identity";
-import { getBettingInsights } from "./configuration/bettingLogic";
+import { getBettingInsights } from "./bettingLogic";
 
 export const INITIAL_MESSAGE: string = `Hello, I'm ${AI_NAME}, ${OWNER_NAME}'s AI assistant.`;
 export const DEFAULT_RESPONSE_MESSAGE: string = `Sorry, I'm having trouble generating a response. Please try again later.`;
@@ -12,7 +12,7 @@ export async function handleUserMessage(userInput: string): Promise<string> {
 
     if (lowerInput.includes("betting") || lowerInput.includes("odds") || lowerInput.includes("stats")) {
         const words = lowerInput.split(" ");
-        const teamName = words[words.length - 1]; // Assume last word is the team name
+        const teamName = words[words.length - 1]; // Assume team name is the last word
 
         if (!teamName) {
             return "Please specify a team to get betting insights.";
