@@ -1,6 +1,6 @@
 const { getNBABettingOdds } = require("./scraper");
 
-async function getBettingInsights(team) {
+async function getBettingInsights(team: string) {  // <-- Fixing Type Issue
     try {
         const odds = await getNBABettingOdds(team);
 
