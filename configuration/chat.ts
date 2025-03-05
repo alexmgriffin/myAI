@@ -1,5 +1,4 @@
 import { OWNER_NAME, AI_NAME } from "./identity";
-import { getBettingInsights } from "./bettingLogic";
 
 export const INITIAL_MESSAGE: string = `Hello, I'm ${AI_NAME}, ${OWNER_NAME}'s AI assistant.`;
 export const DEFAULT_RESPONSE_MESSAGE: string = `Sorry, I'm having trouble generating a response. Please try again later.`;
