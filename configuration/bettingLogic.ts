@@ -3,8 +3,8 @@ import axios from "axios";
 const NBA_API_URL = "https://api-nba-v1.p.rapidapi.com/players/statistics?game=8133";
 const ODDS_API_URL = "https://api.the-odds-api.com/v4/sports/basketball_nba/odds/";
 
-const NBA_API_KEY = "YOUR_NBA_API_KEY_HERE";  // Replace with actual key
-const ODDS_API_KEY = "YOUR_ODDS_API_KEY_HERE";  // Replace with actual key
+const NBA_API_KEY = "d4d41e847bmshad26c7c81df2647p190a9cjsn54018f6a4f35";
+const ODDS_API_KEY = "7a1e47dab792fbb1b4249717ec6e55a2";  
 
 // Fetch recent game stats for a team
 export async function getTeamStats(team: string) {
