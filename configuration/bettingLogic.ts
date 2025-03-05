@@ -1,6 +1,6 @@
-import { getNBABettingOdds } from "../scraper";
+const { getNBABettingOdds } = require("../scraper");
 
-async function getBettingInsights(team: string) {
+async function getBettingInsights(team) {
     try {
         const odds = await getNBABettingOdds(team);
 
@@ -17,4 +17,4 @@ async function getBettingInsights(team: string) {
     }
 }
 
-export { getBettingInsights };
+module.exports = { getBettingInsights };
