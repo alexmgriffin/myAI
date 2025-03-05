@@ -4,8 +4,11 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(to bottom, #FF9A3C, #FF9A3C 10%, #2B7A78 10%, #2B7A78 90%, #FF9A3C 90%);
-  color: white; /* Ensure text is readable on teal */
+  background: linear-gradient(to bottom, #FF9A3C, #FF9A3C 12%, #2B7A78 12%, #2B7A78 88%, #FF9A3C 88%);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 @layer utilities {
@@ -67,4 +70,17 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Fix layout issues */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
 }
