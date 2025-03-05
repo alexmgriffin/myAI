@@ -6,3 +6,26 @@ export const WORD_CUTOFF: number = 8000; // Number of words until bot says it ne
 export const WORD_BREAK_MESSAGE: string = `I'm reaching my response limit. Let's continue in a new message.`;
 export const HISTORY_CONTEXT_LENGTH: number = 7; // Number of messages to use for context when generating a response
 import { getBettingInsights } from "../configuration/bettingLogic";
+export async function handleUserMessage(userInput: string) {
+    // Extract team name from the user input
+    const lowerInput = userInput.toLowerCase();
+
+    if (lowerInput.includes("betting") || lowerInput.includes("odds") || lowerInput.includes("stats")) {
+        const words = lowerInput.split(" ");
+        const teamName = words[words.length - 1]; // Assume team name is the last word
+
+        if (!teamName) {
+            return "Please specify a team to get betting insights.";
+        }
+
+        try {
+            const insights = await getBettingInsights(teamName);
+            return insights;
+        } catch (error) {
+            console.error("Error fetching betting insights:", error);
+            return "Sorry, I couldn't fetch betting insights at the moment.";
+        }
+    }
+
+    return "I'm here to help! Ask me about sports betting insights or odds.";
+}
