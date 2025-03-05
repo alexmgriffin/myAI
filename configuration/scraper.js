@@ -2,20 +2,16 @@ const axios = require("axios");
 
 async function getNBABettingOdds(team) {
     try {
-        const response = await axios.get("https://www.sportsbookreview.com/betting-odds/nba-basketball/", {
-            headers: {
-                "User-Agent": "Mozilla/5.0"
-            }
-        });
+        const response = await axios.get("https://www.example.com/api/odds"); // Replace with actual odds site URL
 
         return {
-            home_team: "Pacers",
-            away_team: "Lakers",
-            odds: "-110"
-        }; // Replace with actual scraped data
+            home_team: response.data.home_team,
+            away_team: response.data.away_team,
+            odds: response.data.odds,
+        };
     } catch (error) {
         console.error("Error fetching betting odds:", error);
-        return { error: "Failed to fetch data" };
+        return { error: true };
     }
 }
 
