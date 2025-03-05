@@ -1,4 +1,4 @@
-const { getNBABettingOdds } = require("../scraper");
+const { getNBABettingOdds } = require("./scraper");
 
 async function getBettingInsights(team) {
     try {
