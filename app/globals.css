@@ -4,7 +4,8 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(to bottom, #e0f2f1, #f5f5f5, #e0f2f1); 
+  background: url('/background.jpg') center/cover no-repeat fixed;
+  color: #333; /* Adjust text color if needed */
 }
 
 @layer utilities {
