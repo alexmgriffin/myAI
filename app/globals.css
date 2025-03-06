@@ -18,7 +18,7 @@ body {
   :root {
     --background: #f5f5f5; /* Light background */
     --foreground: #333; /* Darker text */
-    --card: #ffffff; /* White chat bubbles */
+    --card: #909191; /* White chat bubbles */
     --card-foreground: #333; /* Darker text */
     --popover: #ffffff;
     --popover-foreground: #333;
