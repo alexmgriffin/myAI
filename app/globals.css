@@ -20,7 +20,7 @@ body {
     --foreground: #333; /* Darker text */
     --card: #909191; /* White chat bubbles */
     --card-foreground: #333; /* Darker text */
-    --popover: #ffffff;
+    --popover: #909191;
     --popover-foreground: #333;
     --primary: #00796b; /* Deep teal for contrast */
     --primary-foreground: #ffffff;
