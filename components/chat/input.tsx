@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Mic } from "lucide-react"; // Import Mic icon
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import ChatFooter from "@/components/chat/footer";
@@ -22,11 +22,37 @@ export default function ChatInput({
   isLoading,
 }: ChatInputProps) {
   const [isFocused, setIsFocused] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+
   const form = useForm({
     defaultValues: {
       message: "",
     },
   });
+
+  // Voice-to-Text Function
+  const startListening = () => {
+    if (!("webkitSpeechRecognition" in window)) {
+      alert("Voice recognition not supported in this browser.");
+      return;
+    }
+
+    const recognition = new (window as any).webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = "en-US";
+
+    recognition.onstart = () => setIsListening(true);
+    recognition.onend = () => setIsListening(false);
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      handleInputChange({
+        target: { value: transcript },
+      } as React.ChangeEvent<HTMLInputElement>);
+    };
+
+    recognition.start();
+  };
 
   return (
     <>
@@ -39,6 +65,17 @@ export default function ChatInput({
                 isFocused ? "ring-2 ring-ring ring-offset-2" : ""
               }`}
             >
+              {/* Voice Button */}
+              <Button
+                type="button"
+                className={`rounded-full w-10 h-10 p-0 flex items-center justify-center mr-2 ${
+                  isListening ? "bg-green-500 text-white" : ""
+                }`}
+                onClick={startListening}
+              >
+                <Mic className="w-5 h-5" />
+              </Button>
+
               <FormField
                 control={form.control}
                 name="message"
@@ -58,6 +95,8 @@ export default function ChatInput({
                   </FormItem>
                 )}
               />
+              
+              {/* Send Button */}
               <Button
                 type="submit"
                 className="rounded-full w-10 h-10 p-0 flex items-center justify-center"
