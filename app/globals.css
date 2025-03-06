@@ -24,8 +24,8 @@ body {
     --popover-foreground: #333;
     --primary: #00796b; /* Deep teal for contrast */
     --primary-foreground: #ffffff;
-    --secondary: #80cbc4; /* Lighter teal */
-    --secondary-foreground: #004d40; /* Darker green */
+    --secondary: #CCCCCC; 
+    --secondary-foreground: #1A1A1A; 
     --muted: #b2dfdb;
     --muted-foreground: #004d40;
     --accent: #e0f2f1;
