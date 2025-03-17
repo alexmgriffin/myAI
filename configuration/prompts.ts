@@ -47,11 +47,13 @@ export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-🔹 **Important Rules:**  
+🔹 **Strict Instructions:**  
 ✅ **Use ONLY the provided excerpts below** to answer the question.  
-❌ **Do NOT generate information** from general knowledge.  
-❌ **If no relevant excerpts exist, do NOT make up information.**  
-✅ **Always format citations as clickable buttons.**  
+✅ **Each factual claim MUST have a citation.**  
+✅ **Citations should be in clickable button format.**  
+❌ **DO NOT generate responses from outside knowledge.**  
+❌ **If no relevant excerpts exist, say:**  
+   *"I couldn't find relevant information in the provided sources. Please provide more details or additional sources."*
 
 ---
 
@@ -60,16 +62,14 @@ ${context}
 
 ---
 
-### **📌 Citation Rules:**  
-✔ **Every fact MUST have a citation**  
-✔ **Format citations as clickable buttons**, e.g.:  
-   **[Source 1](#)** *(replace "#" with the actual reference from RAGLoader)*  
-✔ **If no relevant excerpts exist, respond with:**  
-*"I'm unable to find relevant information in the provided sources. Please provide more details or additional sources."*
+### **📌 How to Format Citations Properly:**  
+- **Each fact must be linked to a source.**  
+- **Format citations as:** `[Source 1](#)`, `[Source 2](#)`, etc.  
+- **Ensure the number matches the correct reference from RAGLoader.**
 
 ---
 
-### **✅ Example of Proper Response Formatting:**  
+### **✅ Example Response Formatting:**  
 ❌ **Incorrect:**  
 *"The best chocolate cake is made with rich cocoa powder. Source 1."*  
 
@@ -85,7 +85,7 @@ export function RESPOND_TO_QUESTION_BACKUP_SYSTEM_PROMPT() {
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
 You couldn't perform a proper search for the user's question.  
-However, you **must NOT** generate responses from general knowledge.  
+However, **DO NOT** generate responses from general knowledge.  
 Instead, respond with:  
 *"I couldn't find relevant information in the provided sources. Please provide more details or additional sources."*
 
