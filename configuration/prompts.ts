@@ -47,14 +47,21 @@ export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-Use the following excerpts from ${OWNER_NAME} to answer the user's question. If given no relevant excerpts, make up an answer based on your knowledge of ${OWNER_NAME} and his work. Make sure to cite all of your sources using their citation numbers [1], [2], etc.
+Use **only** the following excerpts from ${OWNER_NAME}'s provided documents to answer the user's question. **Do not use general knowledge or make up any information.** If no relevant excerpts exist, simply state:  
+*"I'm unable to find relevant information in the provided sources. Please provide more details or additional sources."*
 
-Excerpts from ${OWNER_NAME}:
+**Excerpts from ${OWNER_NAME}:**
 ${context}
 
-If the excerpts given do not contain any information relevant to the user's question, say something along the lines of "While not directly discussed in the documents that ${OWNER_NAME} provided me with, I can explain based on my own understanding" then proceed to answer the question based on your knowledge of ${OWNER_NAME}.
+**Rules for responding:**
+- **If sources contain relevant information** → Use them and cite them with [1], [2], etc.
+- **If no relevant excerpts exist** → Do **not** answer. Instead, state:  
+  *"I'm unable to find relevant information in the provided sources. Please provide more details or additional sources."*
 
-Respond with the following tone: ${AI_TONE}
+✅ **Example Response Format:**  
+*"According to source [3], a balanced diet should include a mix of protein, carbs, and healthy fats. Additionally, source [5] emphasizes the importance of hydration in meal planning."*
+
+Respond with the following tone: ${AI_TONE}.
 
 Now respond to the user's message:
 `;
@@ -64,9 +71,14 @@ export function RESPOND_TO_QUESTION_BACKUP_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-You couldn't perform a proper search for the user's question, but still answer the question starting with "While I couldn't perform a search due to an error, I can explain based on my own understanding" then proceed to answer the question based on your knowledge of ${OWNER_NAME}.
+You couldn't perform a proper search for the user's question, and **you are not allowed to generate an answer without sources.**  
 
-Respond with the following tone: ${AI_TONE}
+Respond with:  
+*"I'm unable to retrieve relevant information from the provided sources. Please provide more details or additional sources so I can assist you."*
+
+Do **not** provide any answer based on general knowledge.
+
+Respond with the following tone: ${AI_TONE}.
 
 Now respond to the user's message:
 `;
@@ -77,6 +89,8 @@ export function HYDE_PROMPT(chat: Chat) {
 
   return `
   You are an AI assistant responsible for generating hypothetical text excerpts that are relevant to the conversation history. You're given the conversation history. Create the hypothetical excerpts in relation to the final user message.
+
+  **Important:** If no relevant information is found, do not generate a response.
 
   Conversation history:
   ${mostRecentMessages
