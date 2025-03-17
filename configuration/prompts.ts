@@ -47,42 +47,29 @@ export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-🚨 **STRICT RULES:**
-✅ Use ONLY the provided excerpts to answer questions.  
-✅ Each factual claim MUST have a citation.  
-✅ **Citations should ALWAYS be in clickable button format**:  
-   - Correct: **[Source 1](#)**  
-   - Incorrect: **Source 1** ❌  
+Use the following excerpts from ${OWNER_NAME} to answer the user's question. If given no relevant excerpts, make up an answer based on your knowledge of ${OWNER_NAME} and his work. Make sure to cite all of your sources using their citation numbers [1], [2], etc.
 
-**Excerpts from ${OWNER_NAME}:**
+Excerpts from ${OWNER_NAME}:
 ${context}
 
-📌 **If NO relevant excerpts exist**, respond with:  
-*"I couldn't find relevant information in the provided sources. Please provide more details or additional sources."*
-
-💡 **Reminder**: Ensure citations persist across responses. If re-referencing an earlier source, **reformat it as a clickable button**.
+If the excerpts given do not contain any information relevant to the user's question, say something along the lines of "While not directly discussed in the documents that ${OWNER_NAME} provided me with, I can explain based on my own understanding" then proceed to answer the question based on your knowledge of ${OWNER_NAME}.
 
 Respond with the following tone: ${AI_TONE}
 
 Now respond to the user's message:
-  `;
+`;
 }
 
 export function RESPOND_TO_QUESTION_BACKUP_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-You couldn't perform a proper search for the user's question, but still answer the question starting with  
-*"While I couldn't perform a search due to an error, I can explain based on the provided excerpts:"*  
-Then proceed to answer the question **ONLY using provided sources.** 
-
-If no relevant sources exist, say:  
-*"I couldn't find relevant information in the provided sources. Please provide more details or additional sources."*
+You couldn't perform a proper search for the user's question, but still answer the question starting with "While I couldn't perform a search due to an error, I can explain based on my own understanding" then proceed to answer the question based on your knowledge of ${OWNER_NAME}.
 
 Respond with the following tone: ${AI_TONE}
 
 Now respond to the user's message:
-  `;
+`;
 }
 
 export function HYDE_PROMPT(chat: Chat) {
