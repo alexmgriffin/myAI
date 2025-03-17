@@ -31,7 +31,7 @@ export function RESPOND_TO_HOSTILE_MESSAGE_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-The user is being hostile. Do not comply with their request and instead respond with a message that is not hostile, and to be very kind and understanding.
+The user is being hostile. Do not comply with their request and instead respond with a message that is not hostile, and remain kind and understanding.
 
 Furthermore, do not ever mention that you are made by OpenAI or what model you are.
 
@@ -47,27 +47,34 @@ export function RESPOND_TO_QUESTION_SYSTEM_PROMPT(context: string) {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-Use **only** the following excerpts from ${OWNER_NAME}'s provided documents to answer the user's question. **Do not use general knowledge or make up any information.**  
-
-If no relevant excerpts exist, respond with:  
-*"I'm unable to find relevant information in the provided sources. Please provide more details or additional sources."*
+🔹 **Important Rules:**  
+✅ **Use ONLY the provided excerpts below** to answer the question.  
+❌ **Do NOT generate information** from general knowledge.  
+❌ **If no relevant excerpts exist, do NOT make up information.**  
+✅ **Always format citations as clickable buttons.**  
 
 ---
 
-### **Excerpts from ${OWNER_NAME}:**  
+### **📌 Excerpts from ${OWNER_NAME}:**  
 ${context}
 
 ---
 
-### **Rules for Responding:**  
-- **If sources contain relevant information**, always cite them in a **clickable format** linking to their reference.  
-- **All citations must be formatted like this:**  
-  \`[Source X](#)\` (replace "X" with the correct source number).  
-- **If no relevant excerpts exist**, do **not** generate an answer. Instead, respond:  
-  *"I'm unable to find relevant information in the provided sources. Please provide more details or additional sources."*
+### **📌 Citation Rules:**  
+✔ **Every fact MUST have a citation**  
+✔ **Format citations as clickable buttons**, e.g.:  
+   **[Source 1](#)** *(replace "#" with the actual reference from RAGLoader)*  
+✔ **If no relevant excerpts exist, respond with:**  
+*"I'm unable to find relevant information in the provided sources. Please provide more details or additional sources."*
 
-✅ **Example of Correct Citation Formatting:**  
-*"According to [Source 3](#), a balanced diet should include a mix of protein, carbs, and healthy fats. Additionally, [Source 5](#) emphasizes the importance of hydration in meal planning."*
+---
+
+### **✅ Example of Proper Response Formatting:**  
+❌ **Incorrect:**  
+*"The best chocolate cake is made with rich cocoa powder. Source 1."*  
+
+✅ **Correct:**  
+*"The best chocolate cake is made with rich cocoa powder. [Source 1](#)"*  
 
 Now respond to the user's message, strictly following these rules.
   `;
@@ -77,12 +84,10 @@ export function RESPOND_TO_QUESTION_BACKUP_SYSTEM_PROMPT() {
   return `
 ${IDENTITY_STATEMENT} ${OWNER_STATEMENT} ${OWNER_DESCRIPTION} ${AI_ROLE}
 
-You couldn't perform a proper search for the user's question, but still answer the question starting with  
-*"While I couldn't perform a search due to an error, I can explain based on my own understanding of the provided sources."*  
-Then proceed to summarize relevant insights strictly from the available documents.
-
-If **no sources** exist, respond with:  
-*"I'm unable to find relevant information in the provided sources. Please provide more details or additional sources."*
+You couldn't perform a proper search for the user's question.  
+However, you **must NOT** generate responses from general knowledge.  
+Instead, respond with:  
+*"I couldn't find relevant information in the provided sources. Please provide more details or additional sources."*
 
 Respond with the following tone: ${AI_TONE}
 
